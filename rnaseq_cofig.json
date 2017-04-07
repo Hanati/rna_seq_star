@@ -1,0 +1,14 @@
+{
+"star_bin":"/home/hanat/anaconda2/bin/STAR",
+"genome_dir":"/home/hanat/WorkStations/hg19_star_idx",
+"star_read_command":"gunzip -c",
+"star_thread":2,
+"workdir":"/home/hanat/WorkStation/RNASeq",
+"output_prefix":"tmp",
+"data":{
+	"treat":"sample1",
+	"input":"sample2"
+},
+"genome_fasta":"/home/hanat/WorkStations/hg19/hg19_ercc92.fa",
+"GTFfile":"/home/hanat/WorkStations/hg19/gencode.v19.annotation_plain.gtf"
+}

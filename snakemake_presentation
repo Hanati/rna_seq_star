@@ -1,0 +1,27 @@
+
+
+workdir: "/home/hanat/WorkStations/text_mining/"
+
+SAMPLES = ["sample1","sample2","sample3"]
+
+rule all:
+	input:
+		expand('alignment/{sample}.bam',sample=SAMPLES)
+
+rule map:
+	input:
+		ref='hg19/hg19.fa.bwt',
+		read='raw/{sample}.fastq.gz'
+	output:
+		read_bam='alignment/{sample}.bam'
+	shell:
+		" bwa mem {input.ref} {input.reads} | samtools view -Sbh - >{output.read_bam}"
+
+rule index:
+	input:
+		raw_fasta='hg19/hg19.fa'
+	output:
+		idx_fasta='hg19/hg19.fa.bwt'
+	shell:
+		" bwa index {input.raw_fasta}"
+

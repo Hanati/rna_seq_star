@@ -1,0 +1,27 @@
+##
+for folder in ['/alignment']:
+	if not os.path.exists(config['workdir']+folder):
+		os.makedirs(config['workdir']+folder)
+
+workdir:config['workdir']
+
+rule all:
+	input:
+		expand('alignments/{sample}.sam',sample=config['data'].values())
+rule index:
+	input:
+		genome_fasta=config['genome_fasta']
+	output:
+		genome_dir=config['genome_dir']+'/log'
+	shell:
+		"""{config[star_bin]} --runThreadN {config[star_thread]} --runMode genomeGenerate --genomeDir {config[genome_dir]} --genomeFastaFiles {input.genome_fasta} --sjdbGTFfile {config[GTFfile]} -sjdbOverhang 100 """
+
+rule alignment:
+	input:
+		fq_file='raw/{sample}.fastq.gz',
+		genome_dir=config['genome_dir']+'/log'
+	output:
+		sam_file='raw/{sample}.sam'
+	shell:
+		"""{config[star_bin]} --runThreadN {config[star_thread]} --genomeDir {config[genomeDir]} --readFilesIn {input.fq_file} --readFilesCommand {config[star_read_command]} --outFileNamePrefix {config[output_prefix]}"""
+
