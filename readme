@@ -1,0 +1,5 @@
+## simple readme
+
+## how to run
+
+snakemake -s snakemake_rnaseq --configfile rnaseq_config.json
